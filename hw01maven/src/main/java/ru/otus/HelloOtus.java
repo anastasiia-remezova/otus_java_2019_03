@@ -1,15 +1,14 @@
 package ru.otus;
 
 
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import java.util.Collections;
-import java.util.Map;
+
 
 public class HelloOtus {
-   public static void main() {
+    public static void main(String[] args) {
         Multimap<String, Integer> scores = HashMultimap.create();
         scores.put("Bob", 20);
         scores.put("Bob", 10);

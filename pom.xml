@@ -6,9 +6,9 @@
 
     <groupId>ru.otus</groupId>
     <artifactId>otus_java_2019_03</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>hw01maven</module>
-    </modules>
+
+    <modules><module>hw01maven</module></modules>
 
 </project>
