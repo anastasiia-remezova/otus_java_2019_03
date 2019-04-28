@@ -28,7 +28,7 @@ class DIYarrayList<T> implements List<T> {
         List<Integer> my1 = new ArrayList<Integer>();
         my1.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22));
 
-        List<Integer> destArray = new ArrayList<Integer>(my1.size());
+        List<Integer> destArray = new ArrayList<Integer>();
         Collections.copy(destArray, my);
 
         System.out.println("\ncopy ArrayList:");
@@ -38,7 +38,7 @@ class DIYarrayList<T> implements List<T> {
         }
         System.out.println("\ncopy DIYarrayList:");
         System.out.println(destArray.size());
-        Collections.copy(dest, my);
+        //Collections.copy(dest, my);
 
 
 
