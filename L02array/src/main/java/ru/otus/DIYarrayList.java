@@ -12,33 +12,27 @@ class DIYarrayList<T> implements List<T> {
         //First
         List<Integer> my = new DIYarrayList<Integer>();
         List<Integer> desc = new DIYarrayList<Integer>();
+
         my.addAll(Arrays.asList(8, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22));
         my.add(101);
-        //Collections.addAll(my,58, 65, 233, 33);
+        Collections.addAll(my,58, 65, 233, 33);
         //Collections.copy(desc,my);
-        //my.addAll(Arrays.asList(56, 65, 233, 33));
+        my.addAll(Arrays.asList(56, 65, 233, 33));
+        for (int i = 0; i < my.size(); i++) {
+            System.out.println(my.get(i) + " ");
+        }
+
+        //Third
+        Collections.sort(my, new Comparator<Integer>() {
+            public int compare(Integer o1, Integer o2) {
+                //return o1.toString().compareTo(o2.toString());
+                return o1.compareTo(o2);
+            }
+        });
+        System.out.println("\nSorted:");
         for (int i = 0; i < my.size(); i++) {
             System.out.print(my.get(i) + " ");
         }
-
-        //Second
-
-//        System.out.printf("Copy:");
-//        for (int i = 0; i < desc.size(); i++) {
-//            System.out.print(my.get(i) + " ");
-//        }
-
-        //Third
-//        Collections.sort(my, new Comparator<Integer>() {
-//            public int compare(Integer o1, Integer o2) {
-//                //return o1.toString().compareTo(o2.toString());
-//                return o1.compareTo(o2);
-//            }
-//        });
-//        System.out.println("\nSorted:");
-//        for (int i = 0; i < my.size(); i++) {
-//            System.out.print(my.get(i) + " ");
-//        }
 
     }
 
@@ -53,6 +47,9 @@ class DIYarrayList<T> implements List<T> {
 
     public void copy(DIYarrayList<? super T> dest)
     {
+//        System.out.println("sizes:" + dest.size() + this.size);
+//        dest.size = this.size;
+//        dest.ourArray = new Object[this.size];
         dest.addAll(this);
     }
 
@@ -95,14 +92,10 @@ class DIYarrayList<T> implements List<T> {
 
     public boolean add(T t) {
         Object[] newArray = new Object[size +1];
+        System.arraycopy(ourArray,0,newArray,0,size);
         newArray[size] = t;
-        for (int i = 0; i < newArray.length; i++) {
-            System.out.print(newArray[i] + " ");
-        }
-        //System.arraycopy(newArray,0,ourArray,0,newArray.length);
         ourArray = new Object[size + 1];
-
-        System.arraycopy(newArray,0,ourArray,0,newArray.length-1);
+        System.arraycopy(newArray,0,ourArray,0,newArray.length);
         size++;
         return true;
     }
