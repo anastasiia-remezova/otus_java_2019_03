@@ -21,7 +21,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.DIYarrayList</mainClass>
+                            <mainClass>ru.otus.testDIYarrayList</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

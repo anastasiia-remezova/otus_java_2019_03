@@ -1,7 +1,7 @@
 package ru.otus;
 
 import java.util.*;
-import ru.otus.*;
+
 
 public class testDIYarrayList {
 
