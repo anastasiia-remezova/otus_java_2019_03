@@ -62,7 +62,7 @@ class DIYarrayList<T> implements List<T> {
         System.arraycopy(ourArray, 0, newArray, 0, size);
         newArray[size] = t;
         ourArray = new Object[size + 1];
-        System.arraycopy(newArray, 0, ourArray, 0, newArray.length);
+        ourArray = newArray;
         size++;
         return true;
     }
