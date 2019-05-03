@@ -27,11 +27,10 @@ class DIYarrayList<T> implements List<T> {
         int newArraySize = newArray.length;
 
         Object[] tempArray = new Object[size];
-        System.arraycopy( ourArray , 0, tempArray ,0,size);
+        System.arraycopy(ourArray, 0, tempArray, 0, size);
 
 
-        if (size + newArraySize > ourArray.length)
-        {
+        if (size + newArraySize > ourArray.length) {
             ourArray = new Object[size + newArraySize];
             System.arraycopy(tempArray, 0, ourArray, 0, tempArray.length);
         }
@@ -68,8 +67,7 @@ class DIYarrayList<T> implements List<T> {
 
     public boolean add(T t) {
 
-        if (ourArray.length<=size)
-        {
+        if (ourArray.length <= size) {
             Object[] newArray = new Object[size];
             newArray = ourArray;
             ourArray = new Object[size + DEFAULT_DELTA];
@@ -132,8 +130,47 @@ class DIYarrayList<T> implements List<T> {
     }
 
     public ListIterator<T> listIterator() {
-        throw new UnsupportedOperationException();
-        //return new DIYListIterator();
+
+        return new ListIterator<T>() {
+            private int cursor = 0;
+
+            public boolean hasNext() {
+                throw new UnsupportedOperationException();
+            }
+
+            public T next() {
+                cursor++;
+                return (T) ourArray[cursor - 1];
+            }
+
+            public boolean hasPrevious() {
+                throw new UnsupportedOperationException();
+            }
+
+            public T previous() {
+                throw new UnsupportedOperationException();
+            }
+
+            public int nextIndex() {
+                throw new UnsupportedOperationException();
+            }
+
+            public int previousIndex() {
+                throw new UnsupportedOperationException();
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            public void set(T t) {
+                ourArray[cursor] = t;
+            }
+
+            public void add(T t) {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     public ListIterator<T> listIterator(int index) {
@@ -143,8 +180,6 @@ class DIYarrayList<T> implements List<T> {
     public List<T> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException();
     }
-
-
 
 
 }
