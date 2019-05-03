@@ -12,13 +12,12 @@ public class testDIYarrayList {
 
 
         //first
-        my.addAll(Arrays.asList(8, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22));
+        my.addAll(Arrays.asList(8, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21));
         my.add(101);
-        Collections.addAll(my, 58, 65, 233, 33);
-
+        Collections.addAll(my, 58, 65, 233, 33, 333);
         my.addAll(Arrays.asList(56, 65, 233, 33));
         for (int i = 0; i < my.size(); i++) {
-            System.out.println(my.get(i) + " ");
+            System.out.print(my.get(i) + " ");
         }
 
         //Second
@@ -29,12 +28,11 @@ public class testDIYarrayList {
         destArray.addAll(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0));
         Collections.copy(destArray, my1);
 
-        System.out.println("\ncopy ArrayList:");
-        System.out.println("copy size:" + destArray.size());
-        for (int i = 0; i < destArray.size(); i++) {
-            System.out.println(destArray.get(i) + " ");
-        }
 
+        System.out.println("\n copy size:" + destArray.size() + my1.size());
+        for (int i = 0; i < destArray.size(); i++) {
+            System.out.print(destArray.get(i) + " ");
+        }
 
         List<Integer> my2 = new DIYarrayList<Integer>();
         my2.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9,10,11));
@@ -42,9 +40,9 @@ public class testDIYarrayList {
         List<Integer> destArray2 = new ArrayList<Integer>();
         destArray2.addAll(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0));
 
+        System.out.println("\n copy size:" + destArray2.size() + my2.size());
         Collections.copy(destArray2, my2);
 
-        System.out.println("\ncopy ArrayList:");
         System.out.println("copy size:" + destArray.size());
         for (int i = 0; i < destArray.size(); i++) {
             System.out.println(destArray.get(i) + " ");

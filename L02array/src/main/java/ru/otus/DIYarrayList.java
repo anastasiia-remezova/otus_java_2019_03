@@ -25,11 +25,19 @@ class DIYarrayList<T> implements List<T> {
 
         Object[] newArray = c.toArray();
         int newArraySize = newArray.length;
-        Object[] ourNewArray = new Object[size + newArraySize];
-        System.arraycopy(ourArray, 0, ourNewArray, 0, ourArray.length);
-        System.arraycopy(newArray, 0, ourNewArray, size, newArraySize);
-        ourArray = new Object[size + newArraySize];
-        System.arraycopy(ourNewArray, 0, ourArray, 0, ourNewArray.length);
+
+        Object[] tempArray = new Object[size];
+        System.arraycopy( ourArray , 0, tempArray ,0,size);
+
+
+        if (size + newArraySize > ourArray.length)
+        {
+            ourArray = new Object[size + newArraySize];
+            System.arraycopy(tempArray, 0, ourArray, 0, tempArray.length);
+        }
+
+        System.arraycopy(newArray, 0, ourArray, size, newArraySize);
+
         this.size = size + newArraySize;
         return c.size() != 0;
     }
@@ -60,14 +68,14 @@ class DIYarrayList<T> implements List<T> {
 
     public boolean add(T t) {
 
-        if (ourArray.length==size)
+        if (ourArray.length<=size)
         {
             Object[] newArray = new Object[size];
             newArray = ourArray;
             ourArray = new Object[size + DEFAULT_DELTA];
-            System.arraycopy(ourArray, 0, newArray, 0, size);
+            System.arraycopy(newArray, 0, ourArray, 0, size);
         }
-        ourArray[size+1] = t;
+        ourArray[size] = t;
         size++;
         return true;
     }
