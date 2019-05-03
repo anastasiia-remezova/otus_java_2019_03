@@ -1,12 +1,13 @@
 package ru.otus;
 
 import java.util.*;
+import ru.otus.*;
 
 public class testDIYarrayList {
 
     public static void main(String[] args) {
         //First
-        List<Integer> my = new DIYarrayList<Integer>();
+        List<Integer> my = new ru.otus.DIYarrayList<Integer>();
         List<Integer> dest = new DIYarrayList<Integer>();
 
 

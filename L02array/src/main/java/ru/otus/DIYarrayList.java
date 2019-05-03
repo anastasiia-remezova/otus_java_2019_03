@@ -7,6 +7,7 @@ class DIYarrayList<T> implements List<T> {
     private int size = 0;
     private final static Object[] defaultArray = {};
     private Object[] ourArray;
+    private final DEFAULT_DELTA = 10;
 
     public void sort(Comparator<? super T> c) {
         Arrays.sort(ourArray, 0, size, (Comparator<? super Object>) c);
@@ -58,11 +59,15 @@ class DIYarrayList<T> implements List<T> {
     }
 
     public boolean add(T t) {
-        Object[] newArray = new Object[size + 1];
-        System.arraycopy(ourArray, 0, newArray, 0, size);
-        newArray[size] = t;
-        ourArray = new Object[size + 1];
-        ourArray = newArray;
+
+        if (ourArray.length=size)
+        {
+            Object[] newArray = new Object[size];
+            newArray = ourArray;
+            ourArray = new Object[size + DEFAULT_DELTA];
+            System.arraycopy(ourArray, 0, newArray, 0, size);
+        }
+        ourArray[size+1] = t;
         size++;
         return true;
     }
