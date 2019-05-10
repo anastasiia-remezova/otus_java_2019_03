@@ -1,8 +1,10 @@
+package ru.otus;
+
 import ru.otus.anotation.After;
 import ru.otus.anotation.Before;
 import ru.otus.anotation.Test;
 
-public class TestExecution {
+public class TestExample {
 
     @Before
     public static void before()
@@ -22,11 +24,11 @@ public class TestExecution {
         System.out.println("We are exec after");
     }
 
-    public static void main(String[] args)
+    @Before
+    public static void before2()
     {
-        before();
-        test();
-        after();
-
+        System.out.println("We are exec before 2");
     }
+
+
 }
