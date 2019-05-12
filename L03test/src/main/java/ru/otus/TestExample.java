@@ -9,12 +9,18 @@ public class TestExample {
     @Before
     public static void before()
     {
+
+        Person stive = new Person("Stive");
+        stive.setAge(18);
+        stive.setJob("student");
+
         System.out.println("We are exec before");
     }
 
     @Test
     public static void test()
     {
+
         System.out.println("We are exec test");
     }
 
