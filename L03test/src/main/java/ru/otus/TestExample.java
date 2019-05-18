@@ -4,7 +4,10 @@ import ru.otus.anotation.After;
 import ru.otus.anotation.Before;
 import ru.otus.anotation.Test;
 
-public class TestExample {
+public class TestExample extends TestAsserts {
+
+
+    public static Person stive = new Person("Stive");
 
     @Before
     public static void before()
@@ -13,15 +16,17 @@ public class TestExample {
         Person stive = new Person("Stive");
         stive.setAge(18);
         stive.setJob("student");
-
         System.out.println("We are exec before");
     }
 
     @Test
     public static void test()
     {
-
-        System.out.println("We are exec test");
+        Person superStive =  new Person("Stive");
+        superStive.setAge(18);
+        superStive.setJob("student");
+        assertEquals(stive,superStive);
+        System.out.println("We are exec test:" + assertEquals(stive,superStive));
     }
 
     @After

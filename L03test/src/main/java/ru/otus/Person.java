@@ -1,7 +1,10 @@
 package ru.otus;
 
 public class Person {
-    public String name;
+    private String name;
+    private Integer age;
+    private Character sex;
+    private String job;
 
     public Person(String name) {
         this.name = name;
@@ -39,9 +42,9 @@ public class Person {
         return job;
     }
 
-    public Integer age;
-    public Character sex;
-    public String job;
 
+    public boolean equals(Person otherPerson){
+        return this.name.equals(otherPerson.name) ;
 
+    }
 }
