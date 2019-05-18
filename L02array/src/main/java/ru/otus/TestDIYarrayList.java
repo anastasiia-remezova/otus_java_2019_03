@@ -3,7 +3,7 @@ package ru.otus;
 import java.util.*;
 
 
-public class testDIYarrayList {
+public class TestDIYarrayList {
 
     public static void main(String[] args) {
         //First
@@ -29,7 +29,7 @@ public class testDIYarrayList {
 
         Collections.copy(destCopy, src);
 
-        System.out.println("Copy: " + destCopy.size());
+        System.out.println("\nCopy: " + destCopy.size());
         for (int i = 0; i < destCopy.size(); i++) {
             System.out.print(destCopy.get(i) + " ");
         }

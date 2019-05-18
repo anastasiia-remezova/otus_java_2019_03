@@ -10,7 +10,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <properties>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+    </properties>
 
 
     <build>
@@ -21,7 +24,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.testDIYarrayList</mainClass>
+                            <mainClass>ru.otus.TestDIYarrayList</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
