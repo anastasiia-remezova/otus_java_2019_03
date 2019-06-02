@@ -13,7 +13,7 @@ public class TestExample extends TestAsserts {
     public static void before()
     {
 
-        Person stive = new Person("Stive");
+        //Person stive = new Person("Stive");
         stive.setAge(18);
         stive.setJob("student");
         System.out.println("We are exec before");
@@ -28,6 +28,17 @@ public class TestExample extends TestAsserts {
         assertEquals(stive,superStive);
         System.out.println("We are exec test:" + assertEquals(stive,superStive));
     }
+
+    @Test
+    public static void test2()
+    {
+        Person superStive =  new Person("Stive");
+        superStive.setAge(188);
+        superStive.setJob("student");
+        assertEquals(stive,superStive);
+        System.out.println("We are exec test:" + assertEquals(stive,superStive));
+    }
+
 
     @After
     public static void after()

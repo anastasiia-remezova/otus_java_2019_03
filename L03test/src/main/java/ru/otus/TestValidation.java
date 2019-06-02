@@ -32,6 +32,7 @@ public class TestValidation {
             //System.out.println("We found method:" + method);
             Annotation[] declaredAnnotations = method.getDeclaredAnnotations();
             for (Annotation annotation : declaredAnnotations) {
+
                 annotationName = annotation.toString().substring(annotation.toString().lastIndexOf(".") + 1).replace("(", "").replace(")", "");
                 try {
                     methodsPriors.put(method, priors.get(annotationName));

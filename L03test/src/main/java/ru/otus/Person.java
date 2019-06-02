@@ -44,7 +44,7 @@ public class Person {
 
 
     public boolean equals(Person otherPerson){
-        return this.name.equals(otherPerson.name) ;
+        return this.name.equals(otherPerson.name) && this.age.equals(otherPerson.age);
 
     }
 }
