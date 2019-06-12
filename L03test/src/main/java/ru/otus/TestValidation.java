@@ -4,9 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Map.Entry.comparingByValue;
 import static java.util.stream.Collectors.toMap;
@@ -23,7 +21,8 @@ public class TestValidation {
     public static void run(Class c) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Class<?> clazz = c;
         Constructor constructor = c.getDeclaredConstructor();
-        Map<Method, Integer> methodsPriors = new HashMap<>();
+        Map<Method, Integer> methodsBeforeAfter = new HashMap<>();
+        List<Method> methodsTest = new ArrayList<>();
 
         Method[] declaredMethods = clazz.getDeclaredMethods();
         for (Method method : declaredMethods) {
@@ -35,25 +34,43 @@ public class TestValidation {
 
                 annotationName = annotation.toString().substring(annotation.toString().lastIndexOf(".") + 1).replace("(", "").replace(")", "");
                 try {
-                    methodsPriors.put(method, priors.get(annotationName));
-                    //System.out.println("Ann: " + annotationName + " " + priors.get(annotationName));
+                    if (annotationName.equals("Test")) {
+                        methodsTest.add(method);
+                    } else {
+                        methodsBeforeAfter.put(method, priors.get(annotationName));
+                    }
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
         }
 
-        final HashMap<Method, Integer> sortedMethods = methodsPriors.entrySet()
-            .stream()
-            .sorted(comparingByValue())
-            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
-                LinkedHashMap::new));
+        for (Method m : methodsTest) {
 
-        for (Map.Entry<Method, Integer> entry : sortedMethods.entrySet()) {
-            //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
             TestExample o1 = (TestExample) constructor.newInstance();
-            entry.getKey().setAccessible(true);
-            Object o = entry.getKey().invoke(o1);
+            Map<Method, Integer> runMethods = new HashMap<>();
+            runMethods.putAll(methodsBeforeAfter);
+            runMethods.put(m, 1);
+
+            Map<Method, Integer> sortedMethods = runMethods.entrySet()
+                    .stream()
+                    .sorted(comparingByValue())
+                    .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+                            LinkedHashMap::new));
+
+            for (Map.Entry<Method, Integer> entry : sortedMethods.entrySet()) {
+                
+                entry.getKey().setAccessible(true);
+                Object o = entry.getKey().invoke(o1);
+            }
+
+        }
+    }
+    private static void printMethodMap(Map<Method, Integer> m){
+        System.out.println(m.toString());
+        for(Map.Entry<Method,Integer> entry:m.entrySet())
+        {
+            System.out.println("FKey = " + entry.getKey() + ", FValue = " + entry.getValue());
         }
     }
 }
