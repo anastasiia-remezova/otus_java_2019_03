@@ -9,5 +9,10 @@ class Demo {
     }
 
     public void action() {
-        new TestLogging().calculation(6); }
+        TestLoginInterface t =  ProxyHandler.createMyClass();
+        t.calculation(6);
+        t.calculation(6,4);
+        t.plus(6);
+
+    }
 }
