@@ -32,7 +32,7 @@ public class ProxyHandler {
             {
                 if(a.toString().equals("@ru.otus.Log()")){
                     Parameter[] parameters = m.getParameters();
-                    //Paranamer paranamer = new CachingParanamer();
+                    Paranamer paranamer = new CachingParanamer();
                     //String[] parameterNames = paranamer.lookupParameterNames(method)
                     for (Parameter p:parameters)
                     {

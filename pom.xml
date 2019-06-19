@@ -18,6 +18,7 @@
         <module>L01maven</module>
         <module>L02array</module>
         <module>L03test</module>
+        <module>L04log</module>
 
     </modules>
 
