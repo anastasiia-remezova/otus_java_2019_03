@@ -1,11 +1,10 @@
 package ru.otus;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.Proxy;
+import java.lang.reflect.*;
 import java.util.Arrays;
+import java.util.List;
+
 
 public class ProxyHandler {
 
@@ -26,17 +25,25 @@ public class ProxyHandler {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             Method m = myClass.getClass().getMethod(method.getName(), method.getParameterTypes());
+
+
             Annotation[] declaredAnnotations = m.getDeclaredAnnotations();
             StringBuilder params = new StringBuilder();
             for(Annotation a:declaredAnnotations)
             {
                 if(a.toString().equals("@ru.otus.Log()")){
+                    m.setAccessible(true);
                     Parameter[] parameters = m.getParameters();
-                    Paranamer paranamer = new CachingParanamer();
-                    //String[] parameterNames = paranamer.lookupParameterNames(method)
+
+
+
+
+                    System.out.println("We in if"  + parameters.length);
                     for (Parameter p:parameters)
                     {
-                        params.append("param name: " + p.getName());
+                        //System.out.println(parameterType.getName());
+
+                        params.append("param name: " + p.getName() );
                         params.append(" ");
                         params.append("param value:" + p);
 
