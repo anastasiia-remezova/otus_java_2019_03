@@ -30,10 +30,13 @@ http://openjdk.java.net/jeps/158
 /*
 1)
     default, time: 83 sec (82 without Label_1)
+    time:191
 2)
     -XX:MaxGCPauseMillis=100000, time: 82 sec //Sets a target for the maximum GC pause time.
+    time:136
 3)
     -XX:MaxGCPauseMillis=10, time: 91 sec
+    
 4)
 -Xms2048m
 -Xmx2048m
