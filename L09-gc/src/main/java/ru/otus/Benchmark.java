@@ -19,7 +19,7 @@ class Benchmark implements BenchmarkMBean {
             for (int i = 0; i < local; i++) {
                 array[i] = new String(new char[0]);
             }
-            Thread.sleep(10); //Label_1
+            //Thread.sleep(10); //Label_1
         }
     }
 

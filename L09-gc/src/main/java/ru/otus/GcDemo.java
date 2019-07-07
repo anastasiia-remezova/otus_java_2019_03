@@ -10,6 +10,7 @@ import javax.management.openmbean.CompositeData;
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by tully.
@@ -30,25 +31,71 @@ http://openjdk.java.net/jeps/158
 /*
 1)
     default, time: 83 sec (82 without Label_1)
-    time:191
+    iOld: 111
+    i:2405
+    time:450
+    ---without label1
+    iOld: 109
+    i:2552
+    time:451
+
 2)
     -XX:MaxGCPauseMillis=100000, time: 82 sec //Sets a target for the maximum GC pause time.
-    time:136
+    iOld: 200
+    i:2597
+    time:670
+    ---without label1
+    iOld: 200
+    i:2597
+    time:493
+
+
 3)
     -XX:MaxGCPauseMillis=10, time: 91 sec
-    
+    iOld: 333
+    i:5998
+    time:527
+     ---without label1
+    iOld: 333
+    i:5994
+    time:594
+
+
 4)
--Xms2048m
--Xmx2048m
+  -Xms2048m
+  -Xmx2048m
     time: 81 sec
+    iOld: 30
+    i:1360
+    time:621
+    ---without label1
+    iOld: 29
+    i:1358
+    time:787
+
 5)
 -Xms5120m
 -Xmx5120m
     time: 80 sec
+    iOld: 0
+i:555
+time:718
+---without label1
+iOld: 0
+i:555
+time:611
+
+
 5)
 -Xms20480m
 -Xmx20480m
     time: 81 sec (72 without Label_1)
+    iOld: 0
+    i:138
+    time:1439
+    ---without label1
+    не дождалась-  время между итерациями от 20000ms
+
 */
 
 public class GcDemo {
@@ -73,6 +120,8 @@ public class GcDemo {
 
     private static void switchOnMonitoring() {
         List<GarbageCollectorMXBean> gcbeans = java.lang.management.ManagementFactory.getGarbageCollectorMXBeans();
+        AtomicInteger i = new AtomicInteger();
+        AtomicInteger iOld = new AtomicInteger();
         for (GarbageCollectorMXBean gcbean : gcbeans) {
             System.out.println("GC name:" + gcbean.getName());
             NotificationEmitter emitter = (NotificationEmitter) gcbean;
@@ -87,9 +136,16 @@ public class GcDemo {
                     long duration = info.getGcInfo().getDuration();
 
                     System.out.println("start:" + startTime + " Name:" + gcName + ", action:" + gcAction + ", gcCause:" + gcCause + "(" + duration + " ms)");
+                    if (gcName.equals("G1 Old Generation"))
+                        iOld.getAndIncrement();
+                    System.out.println("iOld: " +iOld);
+
                 }
+                i.getAndIncrement();
+                System.out.println("i:" + i.get());
             };
             emitter.addNotificationListener(listener, null, null);
+
         }
     }
 
