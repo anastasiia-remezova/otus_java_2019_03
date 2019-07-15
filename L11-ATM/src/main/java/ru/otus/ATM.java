@@ -47,6 +47,7 @@ public class ATM {
             cashMap.entrySet().forEach(c -> System.out.println("Nominal: " + c.getKey() + " Count: " + c.getValue()));
             if (currentSum != 0) {
                 System.out.println("Not enough banknotes");
+                cashMap.clear();
             } else {
                 cashMap.entrySet().stream().forEach(cm ->
                         {
