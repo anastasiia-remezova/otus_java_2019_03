@@ -12,7 +12,7 @@ public class ATM {
         banknotes = new ArrayList<Banknote>();
         addBancknoteNominal(Banknote.Nominal.ONE);
         addBancknoteNominal(Banknote.Nominal.TWO);
-        addBancknoteNominal(Banknote.Nominal.FIFE);
+        addBancknoteNominal(Banknote.Nominal.FIVE);
         addBancknoteNominal(Banknote.Nominal.TEN);
         addBancknoteNominal(Banknote.Nominal.TWENTY);
     }
