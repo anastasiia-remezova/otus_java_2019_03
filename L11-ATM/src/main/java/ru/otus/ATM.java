@@ -5,16 +5,16 @@ import ru.otus.exception.BanknoteNominalException;
 import java.util.*;
 
 public class ATM {
-    private Map<Integer, Integer> cells = new HashMap<>();
+    private Map<Integer, Integer> cells = new TreeMap<>(Collections.reverseOrder());
     private ArrayList<Banknote> banknotes = new ArrayList<Banknote>();
 
     public ATM() {
         banknotes = new ArrayList<Banknote>();
-        addBancknoteNominal(100);
-        addBancknoteNominal(200);
-        addBancknoteNominal(500);
-        addBancknoteNominal(1000);
-        addBancknoteNominal(2000);
+        addBancknoteNominal(Banknote.Nominal.ONE);
+        addBancknoteNominal(Banknote.Nominal.TWO);
+        addBancknoteNominal(Banknote.Nominal.FIFE);
+        addBancknoteNominal(Banknote.Nominal.TEN);
+        addBancknoteNominal(Banknote.Nominal.TWENTY);
     }
 
     //- принимать банкноты разных номиналов (на каждый номинал должна быть своя ячейка)
@@ -38,16 +38,11 @@ public class ATM {
             System.out.println("Insufficient funds");
         } else {
 
-            Map<Integer, Integer> treeMap = new TreeMap<>(Collections.reverseOrder());
-
             Integer currentSum = sum;
-            treeMap.putAll(cells);
 
-            for (Integer i : treeMap.keySet()) {
-
+            for (Integer i : cells.keySet()) {
                 cashMap.put(i, currentSum / i);
                 currentSum = currentSum - (i * (currentSum / i));
-
             }
             cashMap.entrySet().forEach(c -> System.out.println("Nominal: " + c.getKey() + " Count: " + c.getValue()));
             if (currentSum != 0) {
@@ -100,7 +95,7 @@ public class ATM {
     }
 
 
-    private void addBancknoteNominal(Integer banknoteNominal) {
+    private void addBancknoteNominal(Banknote.Nominal banknoteNominal) {
         Banknote b = new Banknote();
         b.setNominal(banknoteNominal);
         banknotes.add(b);
