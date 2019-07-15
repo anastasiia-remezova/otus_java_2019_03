@@ -16,7 +16,7 @@ public class Banknote {
 
     public enum Nominal
     {
-        ONE(100), TWO(200),FIFE(500), TEN(1000),TWENTY(2000);
+        ONE(100), TWO(200),FIVE(500), TEN(1000),TWENTY(2000);
         private final int value;
 
         private Nominal(int value) {
