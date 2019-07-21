@@ -19,6 +19,7 @@
         <module>L02array</module>
         <module>L03test</module>
         <module>L11-ATM</module>
+        <module>L13DepATM</module>
 
     </modules>
 
