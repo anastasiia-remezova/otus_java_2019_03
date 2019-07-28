@@ -20,6 +20,7 @@
         <module>L03test</module>
         <module>L04log</module>
         <module>L11-ATM</module>
+        <module>L13DepATM</module>
 
     </modules>
 
