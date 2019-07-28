@@ -18,10 +18,11 @@
         <module>L01maven</module>
         <module>L02array</module>
         <module>L03test</module>
+        <module>L04log</module>
         <module>L09-gc</module>
         <module>L11ATM</module>
+        <module>L13DepATM</module>
         <module>L15ser</module>
-
     </modules>
 
 </project>
