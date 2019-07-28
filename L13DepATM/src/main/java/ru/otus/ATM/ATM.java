@@ -1,4 +1,7 @@
-package otus;
+package ru.otus.ATM;
+
+import ru.otus.ATM.command.GetMoney;
+import ru.otus.ATM.command.SetMoney;
 
 import java.util.*;
 

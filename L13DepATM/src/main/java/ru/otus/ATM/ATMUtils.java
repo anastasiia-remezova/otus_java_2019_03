@@ -1,4 +1,6 @@
-package otus;
+package ru.otus.ATM;
+
+import ru.otus.ATM.StateATM;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package otus;
+package ru.otus.ATM;
 
 public class Banknote {
 

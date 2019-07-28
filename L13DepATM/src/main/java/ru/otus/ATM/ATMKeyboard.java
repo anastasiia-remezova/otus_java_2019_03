@@ -1,6 +1,8 @@
-package otus;
+package ru.otus.ATM;
 
 import org.javatuples.Pair;
+import ru.otus.ATM.command.Command;
+
 import java.util.Deque;
 import java.util.LinkedList;
 

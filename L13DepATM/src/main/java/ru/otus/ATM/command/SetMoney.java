@@ -1,4 +1,6 @@
-package otus;
+package ru.otus.ATM.command;
+
+import ru.otus.ATM.ATMUtils;
 
 public class SetMoney implements Command {
 
