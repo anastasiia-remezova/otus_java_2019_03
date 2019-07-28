@@ -10,26 +10,28 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestNjson {
-    private Njson n;
-    private Programmer Pit;
-    private String json;
+    private static Njson n;
+    private static Programmer Pit;
+    private static String json;
 
     @BeforeAll
-    public void init()
-    {
-        Pit =  new Programmer("Pit", 21, (String[]) Arrays.asList("english").toArray(), Arrays.asList("Java"));
-        n = new Njson(Pit);
-        json = n.toJson();
-
+    public static void init() {
+        String[] lang = new String[2];
+        lang[0] = "Russian";
+        lang[1] = "English";
+        Pit = new Programmer("Pit", 21,
+               lang,
+                Arrays.asList("Java"));
+        n = new Njson();
+        json = n.toJson(Pit);
+        System.out.println(json);
     }
 
     @Test
-    public void testToJson()
-
-    {
+    public void testToJson() {
         Gson gson = new Gson();
         Programmer newPit = gson.fromJson(json, Programmer.class);
-        assertEquals (newPit,Pit);
+        assertEquals(newPit, Pit);
     }
 
 }

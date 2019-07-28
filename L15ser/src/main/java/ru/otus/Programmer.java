@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Programmer {
     private String name;
-    private int age;
+    private Integer age;
     private boolean sex;
     private String[] languages;
     private List<String> programming_languages;
@@ -42,7 +42,7 @@ public class Programmer {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
