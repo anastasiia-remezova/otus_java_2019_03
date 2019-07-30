@@ -4,8 +4,6 @@ import ru.otus.ATM.ATMUtils;
 
 public class GetMoney implements Command {
 
-
-
     private final ATMUtils atm;
 
     public GetMoney (ATMUtils atm) {

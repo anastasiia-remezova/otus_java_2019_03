@@ -18,7 +18,7 @@ public class ATM extends Observable {
         initialization();
     }
 
-    ATM() {
+    public ATM() {
         this.nominal = Arrays.asList(Banknote.Nominal.values());
         initialization();
     }
