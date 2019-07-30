@@ -8,7 +8,7 @@ public class Programmer {
     private String name;
     private Integer age;
     private boolean sex;
-    private String[] languages;
+
     private List<String> programming_languages;
 
     public String getName() {
@@ -27,15 +27,9 @@ public class Programmer {
         return age == that.age &&
                 sex == that.sex &&
                 Objects.equals(name, that.name) &&
-                Arrays.equals(languages, that.languages) &&
-                Objects.equals(programming_languages, that.programming_languages);
-    }
 
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(name, age, sex, programming_languages);
-        result = 31 * result + Arrays.hashCode(languages);
-        return result;
+                Objects.equals(programming_languages, that.programming_languages)
+                ;
     }
 
     public int getAge() {
@@ -54,15 +48,6 @@ public class Programmer {
         this.sex = sex;
     }
 
-    public String[] getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(String[] languages) {
-        this.languages = languages;
-    }
-
-
     public List<String> getProgramming_languages() {
         return programming_languages;
     }
@@ -71,10 +56,16 @@ public class Programmer {
         this.programming_languages = computer_languages;
     }
 
-    public Programmer(String name, int age, String[] languages, List<String> programming_languages) {
+    public Programmer(String name, int age, List<String> programming_languages) {
         this.name = name;
         this.age = age;
-        this.languages = languages;
+
+        this.programming_languages = programming_languages;
+    }
+    
+    public Programmer(String name, int age) {
+        this.name = name;
+        this.age = age;
         this.programming_languages = programming_languages;
     }
 }

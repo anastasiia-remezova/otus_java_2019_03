@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestNjson {
     private static Njson n;
@@ -16,22 +17,18 @@ public class TestNjson {
 
     @BeforeAll
     public static void init() {
-        String[] lang = new String[2];
-        lang[0] = "Russian";
-        lang[1] = "English";
-        Pit = new Programmer("Pit", 21,
-               lang,
-                Arrays.asList("Java"));
+        Pit = new Programmer("Pit", 21, Arrays.asList("Java"));
         n = new Njson();
         json = n.toJson(Pit);
-        System.out.println(json);
+        System.out.println("Old Pit: " + n.toJson(Pit));
     }
 
     @Test
     public void testToJson() {
         Gson gson = new Gson();
         Programmer newPit = gson.fromJson(json, Programmer.class);
-        assertEquals(newPit, Pit);
+        System.out.println("New Pit: " + n.toJson(newPit));
+        assertTrue(newPit.equals(Pit));
     }
 
 }
