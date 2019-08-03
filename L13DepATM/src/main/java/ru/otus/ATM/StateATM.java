@@ -4,13 +4,11 @@ import java.util.*;
 
 public class StateATM {
     private Map<Integer, Integer> cells = new TreeMap<>(Collections.reverseOrder());
-    private ArrayList<Banknote> banknotes = new ArrayList<Banknote>();
+    private List<Banknote> banknotes = new ArrayList<Banknote>();
 
     StateATM(List<Banknote.Nominal> banknotes) {
-
         this.banknotes = new ArrayList<Banknote>();
         banknotes.forEach(b ->addBancknoteNominal(b));
-
     }
 
     public Map<Integer, Integer> getCells() {
@@ -22,7 +20,6 @@ public class StateATM {
     }
 
     public void addBanknote(Integer banknoteNominal) {
-
         if (cells.containsKey(banknoteNominal)) {
             cells.put(banknoteNominal, cells.get(banknoteNominal) + 1);
         } else {
@@ -36,7 +33,6 @@ public class StateATM {
         banknotes.add(b);
     }
 
-
     public boolean isSuchBanknotNominal(Integer banknoteNominal) {
 
         Banknote b = banknotes.stream().filter(x -> x.getNominal().equals(banknoteNominal)).findFirst().orElse(null);
@@ -49,10 +45,6 @@ public class StateATM {
     }
 
     public int getBalance() {
-
         return cells.entrySet().stream().mapToInt(e -> e.getKey() * e.getValue()).sum();
-
     }
-
-
 }
