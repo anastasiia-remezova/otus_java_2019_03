@@ -11,8 +11,8 @@
 
 
     <properties>
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
     </properties>
     <modules>
         <module>L01maven</module>
@@ -20,9 +20,10 @@
         <module>L03test</module>
         <module>L04log</module>
         <module>L09-gc</module>
-        <module>L11ATM</module>
+        <module>L11-ATM</module>
         <module>L13DepATM</module>
         <module>L15ser</module>
+        <module>L17ORM</module>
     </modules>
 
 </project>
