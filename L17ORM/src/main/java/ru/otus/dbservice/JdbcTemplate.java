@@ -106,41 +106,44 @@ public class JdbcTemplate<T> implements DBService<T> {
             DbExecutor<T> executor = new DbExecutorImpl<>(connection);
             int Id = 1;
 
-          executor.selectRecord("select * from " + getTableName(clazz) + " where id = ?", Id,
-                resultSet -> {
+            executor.selectRecord("select * from " + getTableName(clazz) + " where id = ?", Id,
+                    resultSet -> {
 
-                    try {
+                        try {
 
-                        if (resultSet.next()) {
+                            if (resultSet.next()) {
 
-                            List<String> params = new ArrayList<>();
+                                List<String> params = new ArrayList<>();
 
-                            Constructor constructor = clazz.getDeclaredConstructor();
+                                Constructor constructor = null;
+                                for (Constructor<T> c : clazz.getDeclaredConstructors()) {
+                                    constructor = c;
+                                    constructor.setAccessible(true);
+                                }
 
-                            Parameter[] parameters = constructor.getParameters();
-                            for(Parameter parameter: parameters)
-                            {
-                                System.out.println( parameter.getName() + "  " +   parameter.getType());
+                                Parameter[] parameters = constructor.getParameters();
+                                for (Parameter parameter : parameters) {
+                                    System.out.println(parameter.getName() + "  " + parameter.getType());
 
-                                //parameter.getName()
+                                    params.add(parameter.getName());
+                                }
+
+
+                                Class<T> o = (Class<T>) constructor.newInstance(params);
+
+
+                                //return new User(resultSet.getLong("id"), resultSet.getString("name"));
+                                //  TestExample o1 = (TestExample) constructor.newInstance();
+                                // System.out.printf("");
+                                return (T)o;
                             }
 
 
-                            Class<T> o = (Class<T>) constructor.newInstance(params);
-                            Class<T> o1 = o;
-
-                            //return new User(resultSet.getLong("id"), resultSet.getString("name"));
-                            //  TestExample o1 = (TestExample) constructor.newInstance();
-                            // System.out.printf("");
-                            return null;
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        return null;
                     }
-                    return null;
-                }
             );
 
 
@@ -173,8 +176,8 @@ public class JdbcTemplate<T> implements DBService<T> {
 
         for (Field f : declaredFields) {
             if (Arrays.stream(f.getDeclaredAnnotations()).filter(a ->
-                a.toString().substring(a.toString().lastIndexOf(".") + 1).replace("(", "").replace(")", "")
-                    .equals("Id")).findFirst().isPresent()
+                    a.toString().substring(a.toString().lastIndexOf(".") + 1).replace("(", "").replace(")", "")
+                            .equals("Id")).findFirst().isPresent()
             ) {
                 return true;
             }
