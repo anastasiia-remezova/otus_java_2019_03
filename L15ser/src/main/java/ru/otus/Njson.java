@@ -16,8 +16,7 @@ public class Njson {
     Set<String> BOOLEAN_TYPES = new HashSet<String>(Arrays.asList("boolean"));
     Set<String> ARRAY_TYPES = new HashSet<String>(Arrays.asList("java.util.List"));
 
-
-    public String toJson(Object o) {
+    public String toJson(Object o) throws Exception {
         Class clazz = o.getClass();
         Field[] declaredFields = clazz.getDeclaredFields();
 
@@ -25,31 +24,23 @@ public class Njson {
         for (Field f : declaredFields) {
             f.setAccessible(true);
             try {
-
                 String type = f.getType().getTypeName();
                 if (INT_TYPES.contains(f.getType().getName())) {
-
                     jsonObject.put(f.getName(), (int) f.get(o));
-
                 } else if (STRING_TYPES.contains(f.getType().getName())) {
                     jsonObject.put(f.getName(), (String) f.get(o));
                 } else if (BOOLEAN_TYPES.contains(f.getType().getName())) {
-
                     jsonObject.put(f.getName(), (Boolean) f.get(o));
-                } else if (ARRAY_TYPES.contains(f.getType().getName())
-                ) {
+                } else if (ARRAY_TYPES.contains(f.getType().getName())) {
                     JSONArray jsArray = new JSONArray();
                     Collection collection = (Collection) f.get(o);
                     collection.forEach(c -> jsArray.add(c));
                     jsonObject.put(f.getName(), jsArray);
                 }
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                throw new Exception(e);
             }
         }
-
         return jsonObject.toString();
     }
-
-
 }
