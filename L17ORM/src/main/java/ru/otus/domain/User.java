@@ -2,6 +2,8 @@ package ru.otus.domain;
 
 import ru.otus.anotation.Id;
 
+import java.util.Objects;
+
 public class User {
 
     @Id
@@ -37,5 +39,20 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                age == user.age &&
+                Objects.equals(name, user.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age);
     }
 }

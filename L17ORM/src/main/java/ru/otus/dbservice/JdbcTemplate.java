@@ -1,13 +1,16 @@
 package ru.otus.dbservice;
 
+import ru.otus.domain.User;
 import ru.otus.executor.DbExecutor;
 import ru.otus.executor.DbExecutorImpl;
 
 import javax.sql.DataSource;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.*;
 
 public class JdbcTemplate<T> implements DBService<T> {
@@ -23,13 +26,13 @@ public class JdbcTemplate<T> implements DBService<T> {
     }
 
     @Override
-    public void create(T objectData) {
-        if (checkAnnotation(objectData)) {
+    public void create(Class clazz) {
+        if (checkAnnotation(clazz)) {
 
 
             try (Connection connection = dataSource.getConnection()) {
                 DbExecutor<T> executor = new DbExecutorImpl<>(connection);
-                Class clazz = objectData.getClass();
+                // Class clazz = objectData.getClass();
 
                 StringBuilder sqlString = new StringBuilder();
                 sqlString.append("create table " + getTableName(clazz) + "(");
@@ -40,7 +43,6 @@ public class JdbcTemplate<T> implements DBService<T> {
 
                 sqlString.delete(length - 2, length).append(")");
 
-                System.out.println(sqlString);
                 executor.insertRecord(sqlString.toString(), null);
 
             } catch (Exception ex) {
@@ -104,50 +106,38 @@ public class JdbcTemplate<T> implements DBService<T> {
 
         try (Connection connection = dataSource.getConnection()) {
             DbExecutor<T> executor = new DbExecutorImpl<>(connection);
-            int Id = 1;
 
-            executor.selectRecord("select * from " + getTableName(clazz) + " where id = ?", Id,
+            Optional<T> t = executor.selectRecord(id, getTableName(clazz), getAnnotationFieldName(clazz),
                     resultSet -> {
-
                         try {
-
                             if (resultSet.next()) {
-
-                                List<String> params = new ArrayList<>();
-
+                                List<Object> params = new ArrayList<>();
                                 Constructor constructor = null;
                                 for (Constructor<T> c : clazz.getDeclaredConstructors()) {
                                     constructor = c;
                                     constructor.setAccessible(true);
                                 }
-
                                 Parameter[] parameters = constructor.getParameters();
                                 for (Parameter parameter : parameters) {
-                                    System.out.println(parameter.getName() + "  " + parameter.getType());
 
-                                    params.add(parameter.getName());
+                                    if (parameter.getType().getName().equals("int")) {
+                                        params.add(resultSet.getInt(parameter.getName()));
+                                    } else if (parameter.getType().getName().equals("long")) {
+                                        params.add(resultSet.getLong(parameter.getName()));
+                                    } else {
+                                        params.add(resultSet.getString(parameter.getName()));
+                                    }
                                 }
-
-
-                                Class<T> o = (Class<T>) constructor.newInstance(params);
-
-
-                                //return new User(resultSet.getLong("id"), resultSet.getString("name"));
-                                //  TestExample o1 = (TestExample) constructor.newInstance();
-                                // System.out.printf("");
-                                return (T)o;
+                                T o = (T) constructor.newInstance(params.toArray());
+                                return (T) o;
                             }
-
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         return null;
                     }
             );
-
-
-            return null;
+            return t.get();
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
@@ -169,20 +159,30 @@ public class JdbcTemplate<T> implements DBService<T> {
         return fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
     }
 
-    private boolean checkAnnotation(Object o) {
 
-        Class clazz = o.getClass();
+    private boolean checkAnnotation(Class clazz) {
+        if (getAnnotationFieldName(clazz) != "") {
+            return true;
+        }
+        return false;
+    }
+
+    private String getAnnotationFieldName(Class clazz) {
+
+
         Field[] declaredFields = clazz.getDeclaredFields();
 
         for (Field f : declaredFields) {
+
             if (Arrays.stream(f.getDeclaredAnnotations()).filter(a ->
                     a.toString().substring(a.toString().lastIndexOf(".") + 1).replace("(", "").replace(")", "")
                             .equals("Id")).findFirst().isPresent()
             ) {
-                return true;
+
+                return f.getName();
             }
         }
-        return false;
+        return "";
     }
 
 }

@@ -10,38 +10,53 @@ import ru.otus.domain.User;
 
 import javax.sql.DataSource;
 
-public class TestDBService {
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    public static  @BeforeAll
-    void initUser(){
+public class TestDBService {
+    static User Pit = null;
+    static User newPit = null;
+    static User Mary = null;
+    static Account pitAccount = null;
+    static Account newPitAccount = null;
+
+
+    public static @BeforeAll
+    void initUser() {
 
         DataSource dataSource = new DataSourceH2();
         DBService demo = new JdbcTemplate<User>(dataSource);
-        User Pit = new User(1, "Pit", 12);
-        User Mary = new User(2, "Mary", 8);
-        demo.create(Pit);
+        Pit = new User(1, "Pit", 12);
+        Mary = new User(2, "Mary", 8);
+
+        demo.create(User.class);
         demo.update(Pit);
         demo.update(Mary);
-        User NewPit = (User) demo.load(1,User.class);
+
+
+        newPit = (User) demo.load(1, User.class);
+
+
     }
 
     public static @BeforeAll
-    void initAccount(){
+    void initAccount() {
         DataSource dataSource = new DataSourceH2();
         DBService demo = new JdbcTemplate<User>(dataSource);
-        Account pitAccount = new Account(2, "credit", 12);
-        demo.create(pitAccount);
+        pitAccount = new Account(2, "credit", 12);
+        demo.create(Account.class);
         demo.update(pitAccount);
-
+        newPitAccount = (Account) demo.load(2, Account.class);
     }
 
     @Test
-    public void testUser(){
-
+    public void testUser() {
+        assertTrue(newPit.equals(Pit));
+        assertFalse(newPit.equals(Mary));
     }
 
     @Test
-    public void testAccout(){
-
+    public void testAccout() {
+        assertTrue(pitAccount.equals(newPitAccount));
     }
 }

@@ -40,4 +40,14 @@ public class DbExecutorImpl<T> implements DbExecutor<T> {
             }
         }
     }
+
+    public Optional<T> selectRecord(long id, String tableName, String idName, Function<ResultSet, T> rsHandler) throws SQLException {
+        try (PreparedStatement pst = this.connection.prepareStatement("select * from " + tableName + " where " + idName + " = ? ")) {
+            pst.setLong(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return Optional.ofNullable(rsHandler.apply(rs));
+            }
+        }
+    }
+
 }

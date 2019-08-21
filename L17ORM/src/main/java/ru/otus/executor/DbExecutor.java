@@ -14,4 +14,5 @@ public interface DbExecutor<T> {
 
     long insertRecord(String sql, List<String> params) throws SQLException;
     Optional<T> selectRecord(String sql, long id, Function<ResultSet, T> rsHandler) throws SQLException;
+    Optional<T> selectRecord(long id,String tableName, String idName,  Function<ResultSet, T> rsHandler) throws SQLException;
 }

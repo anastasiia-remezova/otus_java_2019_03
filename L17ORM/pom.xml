@@ -29,4 +29,23 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5</version>
+                <configuration>
+                    <!-- Original answer -->
+                    <compilerArgument>-parameters</compilerArgument>
+                    <!-- Or, if you use the plugin version >= 3.6.2 -->
+                    <parameters>true</parameters>
+                    <testCompilerArgument>-parameters</testCompilerArgument>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

@@ -2,13 +2,30 @@ package ru.otus.domain;
 
 import ru.otus.anotation.Id;
 
+import java.util.Objects;
+
 public class Account {
 
     @Id
     private long no;
     private String type;
 
-    public Account(int no, String type, int rest) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return no == account.no &&
+                rest == account.rest &&
+                Objects.equals(type, account.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(no, type, rest);
+    }
+
+    public Account(long no, String type, int rest) {
         this.no = no;
         this.type = type;
         this.rest = rest;
