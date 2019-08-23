@@ -1,6 +1,5 @@
 package ru.otus;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,9 +26,7 @@ public class Programmer {
         return age == that.age &&
                 sex == that.sex &&
                 Objects.equals(name, that.name) &&
-
-                Objects.equals(programming_languages, that.programming_languages)
-                ;
+                Objects.equals(programming_languages, that.programming_languages);
     }
 
     public int getAge() {
