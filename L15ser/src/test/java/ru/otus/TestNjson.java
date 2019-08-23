@@ -1,13 +1,12 @@
 package ru.otus;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestNjson {
@@ -16,7 +15,7 @@ public class TestNjson {
     private static String json;
 
     @BeforeAll
-    public static void init() {
+    public static void init() throws Exception {
         Pit = new Programmer("Pit", 21, Arrays.asList("Java"));
         n = new Njson();
         json = n.toJson(Pit);
@@ -24,7 +23,7 @@ public class TestNjson {
     }
 
     @Test
-    public void testToJson() {
+    public void testToJson() throws Exception {
         Gson gson = new Gson();
         Programmer newPit = gson.fromJson(json, Programmer.class);
         System.out.println("New Pit: " + n.toJson(newPit));
