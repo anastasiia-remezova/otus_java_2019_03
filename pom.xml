@@ -19,35 +19,11 @@
         <module>L03test</module>
         <module>L04log</module>
         <module>L09-gc</module>
-        <module>L11-ATM</module>
+        <module>L11ATM</module>
         <module>L13DepATM</module>
         <module>L15ser</module>
         <module>L17ORM</module>
     </modules>
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.5.1</version>-->
-<!--                <configuration>-->
-<!--                    <source>1.8</source>-->
-<!--                    <target>1.8</target>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--                <plugin>-->
-<!--                    <groupId>org.apache.maven.plugins</groupId>-->
-<!--                    <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                    <version>3.0.0-M3</version>-->
-<!--                    <configuration>-->
-<!--                        <systemPropertyVariables>-->
-<!--                            <xmlOutputDir>${project.build.directory}/surefire</xmlOutputDir>-->
-<!--                        </systemPropertyVariables>-->
-<!--                    </configuration>-->
-<!--                </plugin>-->
 
-<!--        </plugins>-->
-
-<!--    </build>-->
 
 </project>
