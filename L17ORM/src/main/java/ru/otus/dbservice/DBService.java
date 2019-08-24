@@ -3,11 +3,11 @@ package ru.otus.dbservice;
 
 public interface DBService<T> {
 
-    void create(Class clazz);
+    void create(T objectData);
 
     void update(T objectData);
 
-    void createOrUpdate(T objectData);
+    void createTable(Class clazz);
 
     T load(long id, Class<T> clazz);
 

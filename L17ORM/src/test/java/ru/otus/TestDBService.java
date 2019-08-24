@@ -14,27 +14,30 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestDBService {
-    static User Pit = null;
-    static User newPit = null;
-    static User Mary = null;
-    static Account pitAccount = null;
-    static Account newPitAccount = null;
+
 
     @Test
     public void testUser() {
 
         DataSource dataSource = new DataSourceH2();
         DBService demo = new JdbcTemplate<User>(dataSource);
-        Pit = new User(1, "Pit", 12);
-        Mary = new User(2, "Mary", 8);
+        User Pit = new User(1, "Pit", 12);
+        User Mary = new User(2, "Mary", 8);
 
-        demo.create(User.class);
-        demo.update(Pit);
-        demo.update(Mary);
+        demo.createTable(User.class);
+        demo.create(Pit);
+        demo.create(Mary);
 
-        newPit = (User) demo.load(1, User.class);
+        User newPit = (User) demo.load(1, User.class);
         assertTrue(newPit.equals(Pit));
         assertFalse(newPit.equals(Mary));
+
+
+        demo.update(new User(2,"Mary",16));
+        User newMary = (User) demo.load(2, User.class);
+        assertTrue(newMary.equals(new User(2,"Mary",16)));
+
+
     }
 
     @Test
@@ -42,10 +45,10 @@ public class TestDBService {
 
         DataSource dataSource = new DataSourceH2();
         DBService demo = new JdbcTemplate<User>(dataSource);
-        pitAccount = new Account(2, "credit", 12);
-        demo.create(Account.class);
-        demo.update(pitAccount);
-        newPitAccount = (Account) demo.load(2, Account.class);
+        Account pitAccount = new Account(2, "credit", 12);
+        demo.createTable(Account.class);
+        demo.create(pitAccount);
+        Account newPitAccount = (Account) demo.load(2, Account.class);
 
         assertTrue(pitAccount.equals(newPitAccount));
     }

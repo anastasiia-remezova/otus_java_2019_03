@@ -19,16 +19,26 @@ public class DbExecutorImpl<T> implements DbExecutor<T> {
 
     @Override
     public long insertRecord(String sql, List<String> params) throws SQLException {
+
         Savepoint savePoint = this.connection.setSavepoint("savePointName");
-        try (PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+
+            if (params != null) {
+                for (int idx = 0; idx < params.size(); idx++) {
+                    pst.setString(idx + 1, params.get(idx));
+                }
+            }
             int rowCount = pst.executeUpdate();
+
             this.connection.commit();
+            System.out.println("inserted rowCount:" + rowCount + " sql: " + pst);
             return rowCount;
         } catch (SQLException ex) {
             this.connection.rollback(savePoint);
             System.out.println(ex.getMessage());
+            throw ex;
         }
-        return -1;
     }
 
     @Override
