@@ -20,9 +20,8 @@ public class TestDBService {
     static Account pitAccount = null;
     static Account newPitAccount = null;
 
-
-    public static @BeforeAll
-    void initUser() {
+    @Test
+    public void testUser() {
 
         DataSource dataSource = new DataSourceH2();
         DBService demo = new JdbcTemplate<User>(dataSource);
@@ -33,30 +32,21 @@ public class TestDBService {
         demo.update(Pit);
         demo.update(Mary);
 
-
         newPit = (User) demo.load(1, User.class);
-
-
-    }
-
-    public static @BeforeAll
-    void initAccount() {
-        DataSource dataSource = new DataSourceH2();
-        DBService demo = new JdbcTemplate<User>(dataSource);
-        pitAccount = new Account(2, "credit", 12);
-        demo.create(Account.class);
-        demo.update(pitAccount);
-        newPitAccount = (Account) demo.load(2, Account.class);
-    }
-
-    @Test
-    public void testUser() {
         assertTrue(newPit.equals(Pit));
         assertFalse(newPit.equals(Mary));
     }
 
     @Test
     public void testAccout() {
+
+        DataSource dataSource = new DataSourceH2();
+        DBService demo = new JdbcTemplate<User>(dataSource);
+        pitAccount = new Account(2, "credit", 12);
+        demo.create(Account.class);
+        demo.update(pitAccount);
+        newPitAccount = (Account) demo.load(2, Account.class);
+
         assertTrue(pitAccount.equals(newPitAccount));
     }
 }
