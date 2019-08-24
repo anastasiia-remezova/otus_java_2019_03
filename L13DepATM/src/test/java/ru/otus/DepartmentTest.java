@@ -28,11 +28,9 @@ public class DepartmentTest {
 
     @Test
     public void testAllBalance() {
-
         assertEquals(d.getAllBalance(),(Integer) 1000);
         d.getATM(0).getMoney(200);
         assertEquals(d.getAllBalance(),(Integer) 800);
-
     }
 
     @Test
