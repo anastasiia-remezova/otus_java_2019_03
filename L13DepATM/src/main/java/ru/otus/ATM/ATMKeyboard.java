@@ -8,7 +8,6 @@ import java.util.LinkedList;
 
 public class ATMKeyboard {
 
-
     private final Deque<Pair<Command, Integer>> history = new LinkedList<Pair<Command, Integer>>();
 
     public void storeAndExecute(Command cmd,Integer sum ) {

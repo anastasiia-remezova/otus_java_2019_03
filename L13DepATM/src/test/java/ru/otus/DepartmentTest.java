@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DepartmentTest {
     static Department d = new Department();
 
-    @BeforeAll
-    public static void init() {
+    @Test
+    public void testAllBalance() {
 
         d.addATM(new ATM());
         d.addATM(new ATM());
@@ -24,22 +24,11 @@ public class DepartmentTest {
         d.getATM(1).setMoney(100);
         d.getATM(2).setMoney(100);
 
-    }
-
-    @Test
-    public void testAllBalance() {
-
         assertEquals(d.getAllBalance(),(Integer) 1000);
         d.getATM(0).getMoney(200);
         assertEquals(d.getAllBalance(),(Integer) 800);
-
-    }
-
-    @Test
-    public void testResumeState(){
-        assertEquals(d.getAllBalance(),(Integer) 1000);
         d.getATM(1).resumeState();
-        assertEquals(d.getAllBalance(),(Integer) 900);
+        assertEquals(d.getAllBalance(),(Integer) 700);
         assertEquals(d.getATM(1).getBalance(),(Integer) 0);
 
     }

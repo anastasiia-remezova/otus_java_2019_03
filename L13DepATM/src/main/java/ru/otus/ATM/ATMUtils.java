@@ -4,7 +4,7 @@ import ru.otus.ATM.StateATM;
 
 import java.util.*;
 
-public class ATMUtils  {
+public class ATMUtils {
     private StateATM state;
 
     public ATMUtils(StateATM atm) {
@@ -54,10 +54,7 @@ public class ATMUtils  {
                 );
             }
         }
-
     }
-
-
 }
 
 
