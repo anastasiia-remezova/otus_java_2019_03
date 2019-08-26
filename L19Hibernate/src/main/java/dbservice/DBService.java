@@ -9,6 +9,6 @@ public interface DBService<T> {
 
     void createTable(Class clazz);
 
-    T load(long id, Class<T> clazz);
+    T load(int id, Class<T> clazz);
 
 }

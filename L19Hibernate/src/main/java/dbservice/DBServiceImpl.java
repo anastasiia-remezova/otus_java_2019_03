@@ -1,7 +1,5 @@
 package dbservice;
 
-import domain.AddressDataSet;
-import domain.PhoneDataSet;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -10,9 +8,16 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.Set;
 
 public class DBServiceImpl<T> implements DBService<T> {
@@ -36,21 +41,7 @@ public class DBServiceImpl<T> implements DBService<T> {
 
     @Override
     public void create(T objectData) {
-
-        Class clazz = objectData.getClass();
-
-        MetadataSources metasources = new MetadataSources(serviceRegistry);
-        metasources.addAnnotatedClass(clazz);
-        getRelatedClasses(clazz);
-        metasources.addAnnotatedClass(PhoneDataSet.class);
-        metasources.addAnnotatedClass(AddressDataSet.class);
-
-
-       Metadata metadata = metasources.getMetadataBuilder()
-                .build();
-
-        sessionFactory = metadata.getSessionFactoryBuilder().build();
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = getSessionFactory(objectData.getClass()).openSession()) {
             session.beginTransaction();
             session.save(objectData);
             session.getTransaction().commit();
@@ -60,7 +51,11 @@ public class DBServiceImpl<T> implements DBService<T> {
 
     @Override
     public void update(T objectData) {
-
+        try (Session session = getSessionFactory(objectData.getClass()).openSession()) {
+            session.beginTransaction();
+            session.save(objectData);
+            session.getTransaction().commit();
+        }
 
     }
 
@@ -69,38 +64,56 @@ public class DBServiceImpl<T> implements DBService<T> {
     }
 
     @Override
-    public T load(long id, Class<T> clazz) {
-        return null;
+    public T load(int id, Class<T> clazz) {
+        try (Session session = getSessionFactory(clazz).openSession()) {
+            return  session.get(clazz, id);
+            //System.out.println(">>>>>>>>>>> selected:" + selected);
+        }
 
     }
 
-    Set<Class> getRelatedClasses(Class clazz){
-        System.out.println("**************");
+    public SessionFactory getSessionFactory(Class clazz) {
+
+        //Class clazz = objectData.getClass();
+
+        MetadataSources metasources = new MetadataSources(serviceRegistry);
+        metasources.addAnnotatedClass(clazz);
+
+        getRelatedClasses(clazz).forEach(relatedClass -> metasources.addAnnotatedClass(relatedClass));
+
+        Metadata metadata = metasources.getMetadataBuilder()
+                .build();
+
+        sessionFactory = metadata.getSessionFactoryBuilder().build();
+
+        return sessionFactory;
+    }
+
+    Set<Class> getRelatedClasses(Class clazz) {
+        Set<Class> classes = new HashSet<>();
+
+        Set<Class> s = Set.of(OneToOne.class, ManyToOne.class, OneToMany.class, ManyToMany.class);
+
         for (Field declaredField : clazz.getDeclaredFields()) {
-            System.out.println("declaredField: " + declaredField);
-            //declaredField.setAccessible(true);
-            for (Annotation declaredAnnotation : declaredField.getDeclaredAnnotations()) {
-                System.out.println("declaredAnnotation: " + declaredAnnotation.annotationType());
-//                for (Annotation field : declaredAnnotation) {
-//                    System.out.println(field.getName());
-//                }
+            Annotation a;
+            for (Class c : s) {
+                a = declaredField.getAnnotation(c);
+                if (a != null) {
+                    for (Method method : a.annotationType().getMethods()) {
+                        if (method.getName().equals("targetEntity")) {
+                            try {
+                                classes.add((Class) method.invoke(a));
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
 
             }
-
         }
-        System.out.println("**************");
-//        for(  Annotation a :clazz.getDeclaredAnnotations())
-//      {
-//          System.out.println("**************");
-//          System.out.println(a.toString());
-//          for (Field declaredField : a.annotationType().getDeclaredFields()) {
-//              System.out.println(declaredField.getName());
-//          }
-//          System.out.println("**************");
-//      }
-
-        return null;
-
+        return classes;
     }
-
 }
