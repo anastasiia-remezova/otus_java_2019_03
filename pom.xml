@@ -23,6 +23,7 @@
         <module>L13DepATM</module>
         <module>L15ser</module>
         <module>L17ORM</module>
+        <module>L19Hibernate</module>
     </modules>
 
 
